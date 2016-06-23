@@ -15,6 +15,12 @@ html(lang='en')
     h1 Bhav Vriksha
     p Hindi Sentiment Treebank
 
+    div.toolbar
+      span व्यक्ति शॉपिंग और एयरपोर्ट से भी डरता है
+      ul
+        each val in ['++', '+', '0', '-', '--']
+          li(role='#{val}') #{val}
+
     div#body
 
     script(type='text/javascript', src='js/libraries.js')
