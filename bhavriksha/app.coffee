@@ -1,6 +1,7 @@
 # Bhav Vriksha
 
 d3 = require 'd3'
+$ = require 'jquery'
 
 App =
   # coffeelint: disable=max_line_length
@@ -46,7 +47,7 @@ App =
         d.y
       ]
     )
-    svg = d3.select('body')
+    svg = d3.select('#body')
       .append('svg')
         .attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom)
@@ -73,18 +74,47 @@ App =
           .attr('class', (d) -> "node #{d.type}")
           .attr('transform', (d) -> "translate(#{d.x}, #{d.y})")
 
-    node
-      .append 'circle'
-        .attr 'r', 4.5
-        .on 'mouseover', (d) -> console.log d
+    {top, left} = $('#body').offset()
+
+    $('.toolbar').on 'mouseleave', (e) ->
+      $(@).addClass 'hidden'
 
     node
-      .append 'text'
-        # .attr 'x', -6
-        .attr 'y', 15
-        .attr 'dy', '.35em'
-        .attr 'text-anchor', 'middle'
-        .text (d) -> d.name
+      .append 'circle'
+        .attr 'r', 10
+        .attr 'fill', '#FFF'
+        .on 'mouseover', (d) ->
+          self = @
+          $('.toolbar ul li').off 'click'
+          $('.toolbar')
+            .css 'top', d.y + top
+            .css 'left', d.x + left
+            .removeClass 'hidden'
+          $('.toolbar .phrase').text d.name
+
+          $('.toolbar ul li').on 'click', (e) ->
+            el = $(@)
+            d.sentiment = el.attr('role')
+            $(self).attr 'fill', el.css('background-color')
+            update_labels()
+
+    update_labels = ->
+      node
+        .append 'text'
+          .attr 'y', 4
+          .attr 'text-anchor', 'middle'
+          .attr 'class', 'sentiment'
+          .text (d) -> d.sentiment
+
+      node
+        .append 'text'
+          .attr 'y', 25
+          .attr 'text-anchor', 'middle'
+          .text (d) ->
+            unless d.children then d.name
+
+    update_labels()
+    window.nodes = nodes
 
 
 module.exports = App
