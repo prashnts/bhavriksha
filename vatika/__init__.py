@@ -15,9 +15,11 @@ def index():
 
 # WSGI Mounts
 
-# @hug.extend_api('/survey')
-# def attach_scraper_api():
-#   return [api_survey]
+import vatika.treebank.api
+
+@hug.extend_api('/treebank')
+def attach_scraper_api():
+  return [vatika.treebank.api]
 
 # Get WSGI friendly environment for *both* Static Files and API
 pecan_mount.tree.graft(__hug_wsgi__, '/api')
