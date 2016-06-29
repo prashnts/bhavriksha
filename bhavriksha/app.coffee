@@ -100,18 +100,22 @@ App =
 
     update_labels = ->
       node
-        .append 'text'
-          .attr 'y', 4
-          .attr 'text-anchor', 'middle'
-          .attr 'class', 'sentiment'
-          .text (d) -> d.sentiment
+        .selectAll 'text.sentiment'
+        .text (d) -> d.sentiment
 
-      node
-        .append 'text'
-          .attr 'y', 25
-          .attr 'text-anchor', 'middle'
-          .text (d) ->
-            unless d.children then d.name
+    node
+      .append 'text'
+        .attr 'y', 4
+        .attr 'text-anchor', 'middle'
+        .attr 'class', 'sentiment'
+        .text (d) -> d.sentiment
+
+    node
+      .append 'text'
+        .attr 'y', 25
+        .attr 'text-anchor', 'middle'
+        .text (d) ->
+          unless d.children then d.name
 
     update_labels()
     window.nodes = nodes
