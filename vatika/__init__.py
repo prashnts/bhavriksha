@@ -2,8 +2,11 @@
 import hug
 import pecan_mount
 import static
+import mongocapsule
 
 from vatika import _config as config
+
+db = mongocapsule.MongoCapsule(config.mongo_db_name, **config.mongo_config)
 
 
 @hug.get('/')
