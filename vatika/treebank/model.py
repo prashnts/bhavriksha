@@ -15,5 +15,6 @@ class Sentence(db.Document):
   @property
   def repr(self):
     return {
-      'parse_tree': self.parse_tree
+      'parse_tree': self.parse_tree,
+      'id': self.oid
     }

@@ -4,14 +4,19 @@ d3 = require 'd3'
 $ = require 'jquery'
 
 App =
-  # coffeelint: disable=max_line_length
-  test_data: "[[[[[{\"token\": \"\\u0935\\u094d\\u092f\\u0915\\u094d\\u0924\\u093f\", \"pos\": \"NN\"}, {\"token\": \"\\u0936\\u0949\\u092a\\u093f\\u0902\\u0917\", \"pos\": \"XC\"}], {\"token\": \"\\u0914\\u0930\", \"pos\": \"CC:\\u0914\\u0930\"}], [[{\"token\": \"\\u090f\\u092f\\u0930\\u092a\\u094b\\u0930\\u094d\\u091f\", \"pos\": \"NN\"}], [{\"token\": \"\\u0938\\u0947\", \"pos\": \"PSP:\\u0938\\u0947\"}, {\"token\": \"\\u092d\\u0940\", \"pos\": \"RP\"}]]], {\"token\": \"\\u0921\\u0930\\u0924\\u093e\", \"pos\": \"VM\"}], {\"token\": \"\\u0939\\u0948\", \"pos\": \"VAUX\"}]"
-  # coffeelint: enable=max_line_length
-
   init: ->
-    @test()
+    @init_canvas()
+    @get_sentence()
+    $('#new').on 'click', => @get_sentence()
 
-  get_tree: (data) ->
+  get_sentence: ->
+    $.ajax
+      url: '/api/treebank'
+    .done (data) =>
+      root = @parse_tree data.parse_tree
+      @draw_tree(root, data.id)
+
+  parse_tree: (data) ->
     parse = (nodes) ->
       if Array.isArray(nodes)
         if nodes.length is 2
@@ -21,15 +26,15 @@ App =
           parse(nodes[0])
       else
         name: nodes.token
-
     flat = (nodes) ->
       if Array.isArray nodes
         return (flat(node) for node in nodes).join(' ')
       else
         return nodes.token
+
     parse JSON.parse(data)
 
-  test: ->
+  init_canvas: ->
     margin =
       top: 40
       right: 40
@@ -37,37 +42,39 @@ App =
       left: 80
     width = 960 - (margin.left) - (margin.right)
     height = 400 - (margin.top) - (margin.bottom)
-    tree = d3.layout.tree().size([
+    @tree = d3.layout.tree().size([
       width
       height
     ])
-    diagonal = d3.svg.diagonal().projection((d) ->
+    @diagonal = d3.svg.diagonal().projection((d) ->
       [
         d.x
         d.y
       ]
     )
-    svg = d3.select('#body')
+    @svg = d3.select('#body')
       .append('svg')
         .attr('width', width + margin.left + margin.right)
         .attr('height', height + margin.top + margin.bottom)
           .append('g')
             .attr('transform', "translate(#{margin.left}, #{margin.top})")
 
-    root = @get_tree @test_data
+    $('.toolbar').on 'mouseleave', (e) ->
+      $(@).addClass 'hidden'
 
-    nodes = tree.nodes(root)
-    links = tree.links(nodes)
-    # Create the link lines.
-    svg.selectAll('.link')
+  draw_tree: (root, id) ->
+    @svg.selectAll('*').remove()
+
+    nodes = @tree.nodes(root)
+    links = @tree.links(nodes)
+
+    @svg.selectAll('.link')
       .data(links)
         .enter()
         .append('path')
           .attr('class', 'link')
-          .attr('d', diagonal)
-
-    # Create the node circles.
-    node = svg.selectAll('.node')
+          .attr('d', @diagonal)
+    node = @svg.selectAll('.node')
       .data(nodes)
         .enter()
         .append('g')
@@ -75,9 +82,6 @@ App =
           .attr('transform', (d) -> "translate(#{d.x}, #{d.y})")
 
     {top, left} = $('#body').offset()
-
-    $('.toolbar').on 'mouseleave', (e) ->
-      $(@).addClass 'hidden'
 
     node
       .append 'circle'
@@ -118,7 +122,6 @@ App =
           unless d.children then d.name
 
     update_labels()
-    window.nodes = nodes
 
 
 module.exports = App
