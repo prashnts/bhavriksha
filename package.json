@@ -24,7 +24,7 @@
     "d3": "^3.5.17",
     "jaded-brunch": "^2.3.0",
     "javascript-brunch": "^2.0.0",
-    "jeet": "^6.1.2",
+    "jeet": "6.1.2",
     "jquery": "^2.2.3",
     "lodash": "^4.11.1",
     "normalize.css": "^4.1.1",
