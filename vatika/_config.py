@@ -5,7 +5,7 @@ import urllib.parse
 module_root = os.getcwd()
 static_root = module_root + '/public'
 
-mongo_uri = urllib.parse.urlsplit(os.environ['MONGO_URL'])
+mongo_uri = urllib.parse.urlsplit(os.environ['MONGODB_URI'])
 mongo_config = {
   'host': mongo_uri.geturl(),
 }
