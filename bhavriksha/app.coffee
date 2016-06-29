@@ -59,7 +59,7 @@ App =
           .append('g')
             .attr('transform', "translate(#{margin.left}, #{margin.top})")
 
-    $('.toolbar').on 'mouseleave', (e) ->
+    $('.toolbar').on 'mouseleave touchend', (e) ->
       $(@).addClass 'hidden'
 
   draw_tree: (root, id) ->
