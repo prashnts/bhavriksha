@@ -5,17 +5,30 @@ pace = require 'pace-progress'
 
 App =
   init: ->
-    @init_canvas()
     pace.start()
+    @init_canvas()
     @get_sentence()
-    $('#new').on 'click', => @get_sentence()
+    $('#new').on 'click', => @annotate_sentence()
+
+  annotate_sentence: ->
+    if @stahp is yes then return
+    $.ajax
+      url: "/api/treebank/#{@oid}"
+      method: 'POST'
+      data: annotation: @flatten_tree(@root)
+    .done =>
+      @get_sentence()
 
   get_sentence: ->
+    @stahp = yes
     $.ajax
       url: '/api/treebank'
     .done (data) =>
+      @oid = data.id
       @root = @parse_tree data.parse_tree
       @draw_tree()
+    .always =>
+      @stahp = no
 
   parse_tree: (data) ->
     parse = (nodes) ->
