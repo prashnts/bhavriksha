@@ -15,8 +15,10 @@ html(lang='en')
       window.brunch = window.brunch || {};
       window.brunch.server = 'localhost';
   body
-    h1 Bhav Vriksha
-    p Hindi Sentiment Treebank
+    header
+      h1 Bhav Vriksha
+      p Hindi Sentiment Treebank
+      button#new Save and Get New
 
     div.toolbar.hidden
       span.phrase
@@ -25,8 +27,6 @@ html(lang='en')
           li(role='#{val}') #{val}
 
     div#body
-
-    button#new Get New
 
     script(type='text/javascript', src='js/libraries.js')
     script(type='text/javascript', src='js/app.js')

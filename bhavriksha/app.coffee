@@ -40,18 +40,16 @@ App =
       right: 40
       bottom: 40
       left: 80
-    width = 960 - (margin.left) - (margin.right)
-    height = 400 - (margin.top) - (margin.bottom)
-    @tree = d3.layout.tree().size([
-      width
-      height
-    ])
-    @diagonal = d3.svg.diagonal().projection((d) ->
-      [
-        d.x
-        d.y
-      ]
-    )
+    width = $(window).width() - (margin.left) - (margin.right)
+    height = $(window).height() - (margin.top) - (margin.bottom)
+
+    @tree = d3.layout
+      .tree().size [width, height]
+
+    @diagonal = d3.svg
+      .diagonal()
+      .projection (d) -> [d.x, d.y]
+
     @svg = d3.select('#body')
       .append('svg')
         .attr('width', width + margin.left + margin.right)
