@@ -25,9 +25,8 @@ module.exports = config:
   npm:
     enabled: yes
     styles:
-      'normalize.css': [
-        'normalize.css'
-      ]
+      'normalize.css': ['normalize.css']
+      'pace-progress': ['themes/black/pace-theme-flash.css']
 
   modules:
     nameCleaner: (path) ->

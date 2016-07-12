@@ -1,11 +1,12 @@
 # Bhav Vriksha
-
 d3 = require 'd3'
 $ = require 'jquery'
+pace = require 'pace-progress'
 
 App =
   init: ->
     @init_canvas()
+    pace.start()
     @get_sentence()
     $('#new').on 'click', => @get_sentence()
 
