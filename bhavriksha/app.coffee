@@ -13,8 +13,8 @@ App =
     $.ajax
       url: '/api/treebank'
     .done (data) =>
-      root = @parse_tree data.parse_tree
-      @draw_tree(root, data.id)
+      @root = @parse_tree data.parse_tree
+      @draw_tree()
 
   parse_tree: (data) ->
     parse = (nodes) ->
@@ -33,6 +33,16 @@ App =
         return nodes.token
 
     parse JSON.parse(data)
+
+  flatten_tree: (data) ->
+    parse = (nodes) ->
+      if nodes.children?
+        nodes_s = (parse child for child in nodes.children)
+      else
+        nodes_s = nodes.name
+      [nodes_s, nodes.sentiment]
+
+    JSON.stringify parse(data)
 
   init_canvas: ->
     margin =
@@ -60,10 +70,10 @@ App =
     $('.toolbar').on 'mouseleave touchend', (e) ->
       $(@).addClass 'hidden'
 
-  draw_tree: (root, id) ->
+  draw_tree: ->
     @svg.selectAll('*').remove()
 
-    nodes = @tree.nodes(root)
+    nodes = @tree.nodes(@root)
     links = @tree.links(nodes)
 
     @svg.selectAll('.link')
