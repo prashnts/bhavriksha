@@ -20,6 +20,14 @@ html(lang='en')
       p Hindi Sentiment Treebank
       button#new Save and Get New
 
+    #etitle
+    h1 Emotions
+
+    div.emotionbar
+      ul
+        each emtn in ['Happy','Sad','Anger','Fear','Disgust','Surprise']
+          li(role='#{emtn}') #{emtn}
+
     div.toolbar.hidden
       span.phrase
       ul

@@ -54,7 +54,7 @@ App =
         nodes_s = (parse child for child in nodes.children)
       else
         nodes_s = nodes.name
-      [nodes_s, nodes.sentiment]
+      ([nodes_s, nodes.sentiment],emotion)
 
     JSON.stringify parse(data)
 
@@ -66,6 +66,12 @@ App =
       left: 80
     width = $(window).width() - (margin.left) - (margin.right)
     height = $(window).height() - (margin.top) - (margin.bottom)
+
+    @ss = div.document.getElementById("myBtn").onclick = displayDate;
+
+    $('.emotionbar ul li').on 'click', (e) ->
+      el = $(@)
+      emotion = el.attr('role')
 
     @tree = d3.layout
       .tree().size [width, height]
