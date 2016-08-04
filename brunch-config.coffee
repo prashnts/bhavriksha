@@ -19,7 +19,7 @@ module.exports = config:
     stylus:
       plugins: [
         'jeet'
-        'bootstrap-styl'
+        'axis'
       ]
 
   npm:

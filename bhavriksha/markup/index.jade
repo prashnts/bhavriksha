@@ -16,17 +16,21 @@ html(lang='en')
       window.brunch.server = 'localhost';
   body
     header
-      h1 Bhav Vriksha
-      p Hindi Sentiment Treebank
-      button#new Save and Get New
+      .logo
+        h1 Bhav Vriksha
+        p Hindi Sentiment Treebank
 
-    #etitle
-    h1 Emotions
-
-    div.emotionbar
-      ul
-        each emtn in ['Happy','Sad','Anger','Fear','Disgust','Surprise']
-          li(role='#{emtn}') #{emtn}
+      .sentence
+        p#sentence
+        div
+          .emotionbar
+            each emtn in ['Happy','Sad','Anger','Fear','Disgust','Surprise']
+              label
+                img(src='img/e_#{emtn.toLowerCase()}.png' alt=emtn)
+                span #{emtn}
+                input(type='radio' name='emotion' value=emtn)
+                span.bg
+          button#new Save and Get New
 
     div.toolbar.hidden
       span.phrase

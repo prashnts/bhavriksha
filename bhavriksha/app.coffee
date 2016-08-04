@@ -2,6 +2,7 @@
 d3 = require 'd3'
 $ = require 'jquery'
 pace = require 'pace-progress'
+_compact = require 'lodash/compact'
 
 App =
   init: ->
@@ -12,10 +13,11 @@ App =
 
   annotate_sentence: ->
     if @stahp is yes then return
+    emotion = $('input[name="emotion"]:checked').attr('checked', no).val()
     $.ajax
       url: "/api/treebank/#{@oid}"
       method: 'POST'
-      data: annotation: @flatten_tree(@root)
+      data: annotation: @flatten_tree(@root, emotion)
     .done =>
       @get_sentence()
 
@@ -48,30 +50,29 @@ App =
 
     parse JSON.parse(data)
 
-  flatten_tree: (data) ->
+  flatten_tree: (data, emotion) ->
     parse = (nodes) ->
       if nodes.children?
         nodes_s = (parse child for child in nodes.children)
       else
         nodes_s = nodes.name
-      [[nodes_s, nodes.sentiment], emotion]
-
-    JSON.stringify parse(data)
+      sentiment = do (d = nodes.sentiment) -> if d then "s:#{d}"
+      [_compact [nodes_s, sentiment]]
+    parsed_tree = parse(data)
+    if emotion? then parsed_tree.push("e:#{emotion}")
+    JSON.stringify parsed_tree
 
   init_canvas: ->
     margin =
       top: 40
-      right: 40
+      left: do (w = $('header').width()) ->
+        if w is 350 then 350
+        else 40
       bottom: 40
-      left: 80
+      right: 40
+
     width = $(window).width() - (margin.left) - (margin.right)
     height = $(window).height() - (margin.top) - (margin.bottom)
-
-    @ss = div.document.getElementById("myBtn").onclick = displayDate
-
-    $('.emotionbar ul li').on 'click', (e) ->
-      el = $(@)
-      emotion = el.attr('role')
 
     @tree = d3.layout
       .tree().size [width, height]
@@ -96,6 +97,8 @@ App =
     nodes = @tree.nodes(@root)
     links = @tree.links(nodes)
 
+    $('#sentence').text @root.name
+
     @svg.selectAll('.link')
       .data(links)
         .enter()
@@ -110,6 +113,7 @@ App =
           .attr('transform', (d) -> "translate(#{d.x}, #{d.y})")
 
     {top, left} = $('#body').offset()
+    right = do (d = $('header').width()) -> if d is 350 then 260 else 0
 
     node
       .append 'circle'
@@ -120,7 +124,7 @@ App =
           $('.toolbar ul li').off 'click'
           $('.toolbar')
             .css 'top', d.y + top
-            .css 'left', d.x + left
+            .css 'left', d.x + left + right
             .removeClass 'hidden'
           $('.toolbar .phrase').text d.name
 

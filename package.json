@@ -4,9 +4,9 @@
   "description": "Hindi Sentiment Treebank",
   "main": "bhavriksha/app.coffee",
   "scripts": {
-    "start": "brunch w -s",
+    "start": "gunicorn vatika:api",
+    "dev": "brunch w",
     "build": "brunch b -p",
-    "deploy": "sh deploy.sh",
     "heroku-postbuild": "brunch b -p && rm -rf node_modules/"
   },
   "author": "Parul Sethi <parul1sethi@gmail.com>",
@@ -15,8 +15,9 @@
   "dependencies": {
     "auto-reload-brunch": "^2.2.0",
     "autoprefixer": "^6.3.6",
+    "axis": "^0.6.1",
     "bootstrap-styl": "^5.0.5",
-    "brunch": "brunch/brunch#aaaee25",
+    "brunch": "^2.8.2",
     "clean-css-brunch": "^2.0.0",
     "coffee-script-brunch": "^2.0.0",
     "coffeelint-brunch": "^2.0.0",
