@@ -1,0 +1,39 @@
+http://www.kkkbi.com/sitemap.xml
+http://www.hindistatus.org/post_tag-sitemap.xml
+http://www.hindistatus.org/post-sitemap.xml
+http://www.hindistatus.org/category-sitemap.xml
+http://www.hindireport.in/post-sitemap.xml
+http://www.hindireport.in/category-sitemap.xml
+http://pustak.org/index.php/books/
+http://www.bharatdarshan.co.nz/
+
+movie review for later 
+http://navbharattimes.indiatimes.com/movie-masti/movie-review/articlelist/2325387.cms?curpg=21
+http://bollywood.bhaskar.com/reviews/movie-reviews/
+http://www.jagran.com/entertainment/reviews-news-hindi.html
+http://khabar.ndtv.com/topic/film-review  (/news/filmy/)
+
+
+stories
+http://kathayatra.blogspot.com/sitemap.xml
+http://sokhababa.blogspot.com/sitemap.xml
+http://www.jagran.com/lifestyle/personalities-news-hindi.html
+
+http://www.jagranjunction.com/sitemap.xml (don't include /category )
+
+not a sitemap
+http://www.amarujala.com/spirituality/wellness  (must contain 'spirituality/wellness' in href's)
+http://www.amarujala.com/lifestyle
+http://hindi.webdunia.com/literature
+http://www.virarjun.com/NewsList.aspx?newsid=11&cat=drstikod ( DisplayNews.aspx?newsid=)
+-- http://khabar.ndtv.com/news/blogs  ( /news/blogs) (done till page 7)
+
+movie review (not a sitemap)
+-- http://www.amarujala.com/entertainment/movie-review
+		        -- http://hindi.webdunia.com/bollywood-movie-review  (left from 1 to 31)
+(copyrighted)		http://hindi.webdunia.com/bollywood-gossip/
+		        http://hindi.webdunia.com/hindi-books-review
+-- http://hindi.filmibeat.com/reviews/ (1 to 51)  (left page 10 onwards)
+http://hindi.filmibeat.com/box-office/
+http://hindi.filmibeat.com/gossips/
+-- http://aajtak.intoday.in/film-review.html  ( /story/movie-review)
