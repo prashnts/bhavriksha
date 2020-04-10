@@ -12,7 +12,7 @@ pecan-mount==0.0.2
 pymongo==3.2.2
 pystache==0.5.4
 python-mimeparse==1.5.2
-requests==2.10.0
+requests==2.20.0
 six==1.10.0
 static==1.1.1
 tqdm==4.8.3
