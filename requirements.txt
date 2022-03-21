@@ -16,6 +16,6 @@ requests==2.10.0
 six==1.10.0
 static==1.1.1
 tqdm==4.8.3
-waitress==0.9.0
+waitress==2.1.1
 WebOb==1.6.1
 WebTest==2.0.21
